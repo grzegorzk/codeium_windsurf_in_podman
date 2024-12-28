@@ -1,0 +1,4 @@
+# Full path to your repositories, this will be mounted within container under the same path
+HOST_PATH_TO_PROJECT=
+CONTAINER_PATH_TO_MOUNT_PROJECT=
+#WITH_NVIDIA_GPU=yes
