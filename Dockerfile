@@ -7,6 +7,7 @@ FROM docker.io/${ARCH_BASE_IMAGE} AS x11_arch
 
 RUN pacman -Sy --disable-download-timeout --noconfirm \
         archlinux-keyring \
+    && pacman-key --refresh-keys \
     && pacman -Sy --disable-download-timeout --noconfirm \
         base-devel \
         binutils \
@@ -48,14 +49,14 @@ RUN groupadd -g $GROUP_ID $USER_NAME \
 USER $USER_NAME
 
 RUN cd /tmp \
-    && git clone https://aur.archlinux.org/trizen.git \
-    && cd trizen \
+    && git clone https://github.com/trizen/trizen.git \
+    && cd trizen/archlinux \
     && makepkg -si --noconfirm \
     && cd / \
     && rm -r /tmp/trizen
 
 RUN cd /tmp \
-    && trizen -S --noconfirm windsurf windsurf-features windsurf-marketplace \
+    && trizen -S --noconfirm windsurf windsurf-features windsurf-marketplace python312 \
     && rm -rf /tmp/windsurf* \
     && trizen -Scc --aur --noconfirm
 

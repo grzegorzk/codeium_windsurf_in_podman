@@ -14,7 +14,7 @@ mkdir -p ~/.local/share/keyrings
 eval "$(printf '\n' | gnome-keyring-daemon --unlock)"
 eval "$(printf '\n' | /usr/bin/gnome-keyring-daemon --start)"
 
-/usr/sbin/windsurf
+windsurf
 windsurf_pid=$(ps -ef | grep windsurf | tr -s ' ' | cut -d ' ' -f2 | head -n 1)
 
 _term() {
