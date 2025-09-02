@@ -24,6 +24,17 @@ make run DOCKER=docker
 
 We are forwarding X11 session and PulseAudio into the container, this is the reason why only Linux distributions are currently supported.
 
+## CUDA support
+
+In order to enable development of code interfacing with CUDA:
+
+```bash
+make build WITH_NVIDIA_GPU=True
+make run WITH_NVIDIA_GPU=True
+```
+
+`nvidia-smi` should not fail if executed in IDE terminal
+
 # Expose source code to the container
 
 Adjust `HOST_PATH_TO_PROJECT` and `CONTAINER_PATH_TO_MOUNT_PROJECT` in `.makerc`
