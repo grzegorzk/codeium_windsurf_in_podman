@@ -10,10 +10,12 @@ NO_NETWORK=
 NETWORK=$$([ -n "${NO_NETWORK}" ] && echo "none" || echo "host")
 
 WITH_NVIDIA_GPU=
+GPU_CPU=$$([ -n "${WITH_NVIDIA_GPU}" ] && echo gpu || echo cpu)
+
 NVIDIA_GPU=$$([ -n "${WITH_NVIDIA_GPU}" ] && echo $$([ DOCKER = "podman" ] && echo "--device nvidia.com/gpu=all --security-opt=label=disable" || echo "--privileged --gpus=all"))
 
-WINDSURF_IMAGE=windsurf_arch
-WINDSURF_CONTAINER=windsurf_arch
+WINDSURF_IMAGE=windsurf_arch_${GPU_CPU}
+WINDSURF_CONTAINER=windsurf_arch_${GPU_CPU}
 UUID=$(shell id -u)
 GUID=$(shell id -g)
 UNAME=$(shell whoami)
@@ -51,7 +53,7 @@ run:
 		${WITH_USERNS} \
 		--security-opt label=type:container_runtime_t \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
-		-v /dev/dri:/dev/dri \
+		--device /dev/dri \
 		-v "$(HOME)"/.Xauthority:"/home/${UNAME}/.Xauthority":Z \
 		--device /dev/video0 \
 		-e DISPLAY \
@@ -67,11 +69,8 @@ run:
 		-v "$(CURDIR)"/docker_files/.ssh:/home/${UNAME}/.ssh \
 		-e EXTENSIONS_DIR=/extensions \
 		-v "${CURDIR}"/docker_files/extensions:/extensions \
-		-v "${CURDIR}"/docker_files/home/.config:/home/${UNAME}/.config \
-		-v "${CURDIR}"/docker_files/home/.codeium:/home/${UNAME}/.codeium \
-		-v "${CURDIR}"/docker_files/home/.cache:/home/${UNAME}/.cache \
-		-v "${CURDIR}"/docker_files/home/.local:/home/${UNAME}/.local \
-		-v "${CURDIR}"/docker_files/home/.vscode-oss:/home/${UNAME}/.vscode-oss \
+		-v "${CURDIR}"/docker_files/home:/home/${UNAME} \
+		-v "$(HOME)"/.config/pulse/cookie:/home/${UNAME}/.config/pulse/cookie \
 		-v "${HOST_PATH_TO_PROJECT}":"${CONTAINER_PATH_TO_MOUNT_PROJECT}" \
 		${WINDSURF_IMAGE}
 
