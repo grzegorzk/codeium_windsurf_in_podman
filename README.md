@@ -43,6 +43,19 @@ Adjust `HOST_PATH_TO_PROJECT` and `CONTAINER_PATH_TO_MOUNT_PROJECT` in `.makerc`
 
 Download extensions from any extensions marketplace and drop them to `docker_files/extensions`, they will be installed next time you issue `make run`
 
+# Troubleshooting
+
+If you get error similar to below:
+```
+Error: crun: cannot stat `/usr/lib/libnvidia-egl-wayland.so.1.1.20`: No such file or directory: OCI runtime attempted to invoke a command that was not found
+```
+
+Try:
+
+```bash
+nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
+```
+
 # Thanks
 
 People building Codeium Windsurf
