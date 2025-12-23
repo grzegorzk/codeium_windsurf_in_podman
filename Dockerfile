@@ -56,7 +56,12 @@ RUN cd /tmp \
     && rm -r /tmp/trizen
 
 RUN cd /tmp \
-    && trizen -S --noconfirm windsurf windsurf-features windsurf-marketplace python312 \
+    && trizen -S --noconfirm \
+        python311 \
+        python312 \
+        windsurf \
+        windsurf-features \
+        windsurf-marketplace \
     && rm -rf /tmp/windsurf* \
     && trizen -Scc --aur --noconfirm
 
