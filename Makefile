@@ -55,7 +55,6 @@ run:
 		--security-opt label=type:container_runtime_t \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		--device /dev/dri \
-		-v "$(HOME)"/.Xauthority:"/home/${UNAME}/.Xauthority":Z \
 		--device /dev/video0 \
 		-e DISPLAY \
 		-e XAUTHORITY \
