@@ -28,9 +28,9 @@ RUN pacman -Sy --disable-download-timeout --noconfirm \
 
 ARG WITH_CUDA
 
+# NOT installing drivers, this container is meant to be created with `--gpus all` or `--runtime=nvidia` so the host driver is mounted in
 RUN [ -n "${WITH_CUDA}" ] \
     && pacman -Sy --disable-download-timeout --noconfirm \
-        nvidia \
         cuda \
         cudnn \
     || echo "Not installing CUDA"
@@ -59,6 +59,7 @@ RUN cd /tmp \
     && trizen -S --noconfirm \
         python311 \
         python312 \
+        python313 \
         windsurf \
         windsurf-features \
         windsurf-marketplace \
