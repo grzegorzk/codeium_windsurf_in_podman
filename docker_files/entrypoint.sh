@@ -7,6 +7,16 @@ chmod 0400 ~/.ssh/*
 touch ~/.ssh/config
 chmod 0700 ~/.ssh/config
 
+echo "Installing extensions"
+CUSTOM_EXTENSIONS_DIR=${HOME}/.vscode-oss/extensions
+mkdir -p "${CUSTOM_EXTENSIONS_DIR}"
+for ext in "${EXTENSIONS_DIR}"/*.vsix; do
+    ext_api="$(basename "${ext}" | sed -e "s/\([^\.]*\..*\)-[0-9]*.*/\1/g")"
+    echo "Installing or updating ${ext}"
+    windsurf --install-extension "${ext}"
+done
+echo "Extensions installed"
+
 # NOTE: setting up gnome keyring, https://unix.stackexchange.com/questions/473528/how-do-you-enable-the-secret-tool-command-backed-by-gnome-keyring-libsecret-an#answer-548005
 eval "$(dbus-launch --sh-syntax)"
 mkdir -p ~/.cache
