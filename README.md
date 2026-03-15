@@ -56,6 +56,8 @@ Try:
 nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
 ```
 
+If extensions are not being installed, double-check if they had been compressed with gzip (vsix is zip file)
+
 # Thanks
 
 People building Codeium Windsurf
